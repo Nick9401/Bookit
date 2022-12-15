@@ -6,8 +6,8 @@ import io.cucumber.java.en.When;
 
 public class ApiStepDefs {
 
-    @Given("I logged Bookit api using {string} and {string}")
-    public void i_logged_bookit_api_using_and(String string, String string2) {
+    @Given("I logged Bookit api as a {string}")
+    public void i_logged_bookit_api_as_a(String role) {
 
     }
     @When("I sent get request to {string} endpoint")
