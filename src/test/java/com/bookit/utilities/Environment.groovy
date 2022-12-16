@@ -1,6 +1,6 @@
 package com.bookit.utilities
 
-class Envirement {
+public class Environment {
 
 
     public static final String URL;
@@ -16,9 +16,14 @@ class Envirement {
     public static final String LEADER_PASSWORD;
 
 
-    static {
+    static{
         Properties properties = null;
-        String environment = System.getProperty("environment") != null ? environment = System.getProperty("environment") : ConfigurationReader.getProperty("environment");
+        String environment = System.getProperty("environment")
+                if(environment!= null) {
+                    environment = System.getProperty("environment")
+                } else{ConfigurationReader.getProperty("environment");
+
+                }
 
 
 
@@ -45,7 +50,6 @@ class Envirement {
         MEMBER_PASSWORD = properties.getProperty("team_member_password");
         LEADER_EMAIL = properties.getProperty("team_leader_email");
         LEADER_PASSWORD = properties.getProperty("team_leader_password");
-
 
     }
 }

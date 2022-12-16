@@ -8,6 +8,11 @@ import java.util.Properties;
  */
 public class ConfigurationReader {
 
+    /**
+     * reads the properties file configuration.properties
+     */
+
+
     private static Properties properties;
 
     static {

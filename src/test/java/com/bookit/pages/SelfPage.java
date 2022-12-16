@@ -9,9 +9,8 @@ public class SelfPage extends TopNavigationBar{
 	public SelfPage() {
 		PageFactory.initElements(Driver.get(), this);
 	}
-	
-	
-	
+
+
 	@FindBy(xpath = "(//*[@class='title is-6'])[1]")
 	public WebElement name;
 

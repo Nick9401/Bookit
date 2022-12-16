@@ -12,28 +12,27 @@ import java.util.concurrent.TimeUnit;
 
 
 public class Hooks {
-
 	@Before("@db")
 	public void dbHook() {
 		System.out.println("creating database connection");
 		DB_Util.createConnection();
 	}
-	
+
 	@After("@db")
 	public void afterDbHook() {
 		System.out.println("closing database connection");
 		DB_Util.destroy();
 
 	}
-	
-	@Before
+
+	@Before("@ui")
 	public void setUp() {
 		// we put a logic that should apply to every scenario
 		Driver.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 	}
-	
-	@After
+
+	@After("@ui")
 	public void tearDown(Scenario scenario) {
 		// only takes a screenshot if the scenario fails
 		if (scenario.isFailed()) {
