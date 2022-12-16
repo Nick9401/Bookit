@@ -2,14 +2,20 @@ package com.bookit.step_definitions;
 
 import com.bookit.utilities.BookitUtils;
 import com.bookit.utilities.ConfigurationReader;
+import com.bookit.utilities.DB_Util;
 import com.bookit.utilities.Environment;
+import io.cucumber.java.bs.A;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.Assert;
 
+import java.util.Map;
+
+import static com.github.dockerjava.api.model.LogConfig.LoggingType.DB;
 import static io.restassured.RestAssured.given;
 
 public class ApiStepDefs {
@@ -52,6 +58,33 @@ public class ApiStepDefs {
         System.out.println("response.jsonPath().getString(\"role\") = " + response.jsonPath().getString("role"));
 
         Assert.assertEquals(expectedRole,response.path("role"));
+    }
+
+    @Then("the information about current user from api and database should match")
+    public void the_information_about_current_user_from_api_and_database_should_match() {
+
+        JsonPath jsonPath = response.jsonPath();
+        String actualLastName = jsonPath.getString("lastName");
+        String actualFirstName = jsonPath.getString("firstName");
+        String actualRole = jsonPath.getString("role");
+
+        String query = "select firstname,lastname,role from users\n" +
+                "where email = 'lfinnisz@yolasite.com'";
+
+        DB_Util.runQuery(query);
+        Map<String,String>dbMap = DB_Util.getRowMap(1);
+        System.out.println(dbMap);
+
+        String firstName = dbMap.get("firstName");
+        String lastName = dbMap.get("lastName");
+        String Role = dbMap.get("role");
+
+
+        Assert.assertEquals(firstName,actualFirstName);
+        Assert.assertEquals(lastName,actualLastName);
+        Assert.assertEquals(Role,actualRole);
+
+
     }
 
 }

@@ -9,7 +9,7 @@ Scenario: verify information about logged user
   And content type is "application/json"
   And role is "student-team-leader"
 
-  @wop
+  @wip @db
   Scenario: verify information about logged user from api and database
     Given I logged Bookit api as a "team-leader"
     When I sent get request to "/api/users/me" endpoint
